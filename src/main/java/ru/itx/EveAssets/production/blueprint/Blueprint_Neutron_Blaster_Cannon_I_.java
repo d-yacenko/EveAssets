@@ -6,7 +6,6 @@ public class Blueprint_Neutron_Blaster_Cannon_I_ extends BlueprintI {
 	public Blueprint_Neutron_Blaster_Cannon_I_(int volume) {
 		this.volume=volume;
 		probability=39;
-		runs=10;
 		isElementary=true;
 	}
 	

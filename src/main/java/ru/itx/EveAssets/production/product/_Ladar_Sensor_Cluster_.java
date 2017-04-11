@@ -18,10 +18,11 @@ public class _Ladar_Sensor_Cluster_ extends Prototype {
 	public _Ladar_Sensor_Cluster_(int volume) {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
-		materials.add(new FerniteCarbide(20));
+		materials.add(new FerniteCarbide(22));
 		materials.add(new HypersynapticFibers(2));
 		materials.add(new Nanotransistors(1));
 		blueprint = new Blueprint_Ladar_Sensor_Cluster_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

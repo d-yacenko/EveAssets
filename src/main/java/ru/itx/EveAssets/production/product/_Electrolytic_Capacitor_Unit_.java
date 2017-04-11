@@ -20,11 +20,12 @@ public class _Electrolytic_Capacitor_Unit_ extends Prototype {
 	public _Electrolytic_Capacitor_Unit_(int volume) {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
-		materials.add(new FerniteCarbide(25));
+		materials.add(new FerniteCarbide(27));
 		materials.add(new Nanotransistors(1));
 		materials.add(new PlasmonicMetamaterials(2));
-		materials.add(new Fullerides(10));
+		materials.add(new Fullerides(11));
 		blueprint = new Blueprint_Electrolytic_Capacitor_Unit_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

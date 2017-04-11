@@ -5,7 +5,6 @@ public class Blueprint_Plasma_Thruster_ extends BlueprintI {
 
 	public Blueprint_Plasma_Thruster_(int volume) {
 		this.volume=volume;
-		runs=10;
 		isElementary=true;
 	}
 	

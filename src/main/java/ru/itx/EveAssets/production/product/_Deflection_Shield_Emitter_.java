@@ -20,10 +20,11 @@ public class _Deflection_Shield_Emitter_ extends Prototype {
 	public _Deflection_Shield_Emitter_(int volume) {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
-		materials.add(new FerniteCarbide(20));
+		materials.add(new FerniteCarbide(22));
 		materials.add(new Ferrogel(1));
 		materials.add(new SylramicFibers(9));
 		blueprint = new Blueprint_Deflection_Shield_Emitter_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

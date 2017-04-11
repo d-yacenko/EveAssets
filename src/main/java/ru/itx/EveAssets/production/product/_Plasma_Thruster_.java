@@ -17,9 +17,10 @@ public class _Plasma_Thruster_ extends Prototype {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
 		materials.add(new PhenolicComposites(3));
-		materials.add(new FerniteCarbide(12));
+		materials.add(new FerniteCarbide(13));
 		materials.add(new Ferrogel(1));
 		blueprint = new Blueprint_Plasma_Thruster_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

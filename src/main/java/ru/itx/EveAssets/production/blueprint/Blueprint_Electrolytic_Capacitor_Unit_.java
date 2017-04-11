@@ -5,7 +5,6 @@ public class Blueprint_Electrolytic_Capacitor_Unit_ extends BlueprintI {
 
 	public Blueprint_Electrolytic_Capacitor_Unit_(int volume) {
 		this.volume=volume;
-		runs=10;
 		isElementary=true;
 	}
 	

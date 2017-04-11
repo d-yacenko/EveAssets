@@ -4,5 +4,5 @@ import ru.itx.EveAssets.production.material.Material;
 
 
 public class Decryptor extends Material {
-	public int probability,runs;
+	public int modProbability,modRuns,modME,modTE;
 }

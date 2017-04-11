@@ -14,9 +14,10 @@ public class _Fernite_Carbide_Composite_Armor_Plate_ extends Prototype {
 	public _Fernite_Carbide_Composite_Armor_Plate_(int volume) {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
-		materials.add(new FerniteCarbide(40));
-		materials.add(new SylramicFibers(10));
+		materials.add(new FerniteCarbide(44));
+		materials.add(new SylramicFibers(11));
 		blueprint = new Blueprint_Fernite_Carbide_Composite_Armor_Plate_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

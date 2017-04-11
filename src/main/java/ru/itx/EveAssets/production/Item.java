@@ -8,6 +8,7 @@ import ru.itx.EveAssets.Data;
 public abstract class Item {
 	public int volume;
 	public boolean isElementary;
+	public boolean isMetaMaterials;
 	
 	public String getName(){
 		return getClass().getSimpleName();
@@ -40,7 +41,7 @@ public abstract class Item {
 	public static ArrayList<Item> comress(ArrayList<Item> list){
 		ArrayList<Item> ret=new ArrayList<Item>();
 		Item[] items= (Item[])list.toArray(new Item[list.size()]);
-		for(int i=0;i<items.length-1;i++){
+		for(int i=0;i<items.length;i++){
 			if(items[i]==null) continue;
 			Item current=items[i];
 			items[i]=null;
@@ -59,6 +60,10 @@ public abstract class Item {
 		for(Item item: list){
 			System.out.println(item);
 		}
+	}
+	
+	public int calcWithME(int quantity,double ME){
+		return (int)Math.ceil(ME*volume)*quantity;
 	}
 	
 	protected int minus(String name,int needed){

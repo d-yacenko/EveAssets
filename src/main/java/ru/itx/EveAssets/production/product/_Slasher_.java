@@ -19,11 +19,11 @@ public class _Slasher_ extends Prototype {
 	public _Slasher_(int volume) {
 		this.volume=volume;
 		materials=new ArrayList<Item>();
-		materials.add(new Tritanium(19000));
-		materials.add(new Pyerite(4500));
-		materials.add(new Mexallon(1501));
-		materials.add(new Isogen(100));
-		materials.add(new Nocxium(90));
+		materials.add(new Tritanium(21111));
+		materials.add(new Pyerite(5000));
+		materials.add(new Mexallon(1667));
+		materials.add(new Isogen(111));
+		materials.add(new Nocxium(100));
 		materials.add(new Megacyte(6));
 		blueprint=new Blueprint_Slasher_(1);
 		isElementary=false;

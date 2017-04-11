@@ -18,10 +18,11 @@ public class _Nanomechanical_Microprocessor_ extends Prototype {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
 		materials.add(new PhenolicComposites(6));
-		materials.add(new FerniteCarbide(16));
+		materials.add(new FerniteCarbide(17));
 		materials.add(new PlasmonicMetamaterials(2));
 		materials.add(new Nanotransistors(2));
 		blueprint = new Blueprint_Nanomechanical_Microprocessor_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

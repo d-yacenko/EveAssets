@@ -14,10 +14,11 @@ public class _Laser_Focusing_Crystals_ extends Prototype {
 	public _Laser_Focusing_Crystals_(int volume) {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
-		materials.add(new TungstenCarbide(28));
-		materials.add(new Fullerides(10));
+		materials.add(new TungstenCarbide(31));
 		materials.add(new HypersynapticFibers(1));
+		materials.add(new Fullerides(11));
 		blueprint = new Blueprint_Laser_Focusing_Crystals_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

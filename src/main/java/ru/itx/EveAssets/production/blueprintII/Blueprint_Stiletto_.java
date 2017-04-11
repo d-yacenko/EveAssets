@@ -17,6 +17,7 @@ public class Blueprint_Stiletto_ extends BlueprintII {
 		decryptor=new ParityDecryptor(1);
 		blueprint=new Blueprint_Slasher_(1);
 		isElementary=false;
+		recalculateEfficiency();
 	}
 	@Override
 	public String getName() {

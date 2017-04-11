@@ -23,6 +23,7 @@ public class _Nuclear_Reactor_Unit_ extends Prototype {
 		materials.add(new FerniteCarbide(9));
 		materials.add(new FermionicCondensates(2));
 		blueprint = new Blueprint_Nuclear_Reactor_Unit_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

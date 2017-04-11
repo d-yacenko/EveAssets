@@ -5,8 +5,6 @@ public class Blueprint_Scythe_ extends BlueprintI {
 
 	public Blueprint_Scythe_(int volume) {
 		this.volume=volume;
-		probability=30;
-		runs=10;
 		isElementary=true;
 	}
 	

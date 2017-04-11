@@ -6,7 +6,6 @@ public class Blueprint_Mega_Pulse_Laser_I_ extends BlueprintI {
 	public Blueprint_Mega_Pulse_Laser_I_(int volume) {
 		this.volume=volume;
 		probability=39;
-		runs=10;
 		isElementary=true;
 	}
 	

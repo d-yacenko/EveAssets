@@ -13,9 +13,10 @@ public class _Thermonuclear_Trigger_Unit_ extends Prototype {
 		this.volume = volume;
 		materials=new ArrayList<Item>();
 		materials.add(new FerniteCarbide(31));
-		materials.add(new Fullerides(11));
 		materials.add(new HypersynapticFibers(1));
+		materials.add(new Fullerides(11));
 		blueprint = new Blueprint_Thermonuclear_Trigger_Unit_(1);
+		isMetaMaterials=true;
 		isElementary = false;
 	}
 	

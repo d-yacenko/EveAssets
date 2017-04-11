@@ -3,8 +3,10 @@ package ru.itx.EveAssets.production.decryptor;
 
 public class ParityDecryptor extends Decryptor {
 	public ParityDecryptor(int volume) {
-		probability=50;
-		runs=3;
+		modProbability=50;
+		modRuns=3;
+		modME=1;
+		modTE=-1;
 		this.volume = volume;
 		isElementary = true;
 	}

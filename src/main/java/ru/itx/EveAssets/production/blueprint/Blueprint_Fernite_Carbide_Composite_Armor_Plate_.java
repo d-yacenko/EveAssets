@@ -5,7 +5,6 @@ public class Blueprint_Fernite_Carbide_Composite_Armor_Plate_ extends BlueprintI
 
 	public Blueprint_Fernite_Carbide_Composite_Armor_Plate_(int volume) {
 		this.volume=volume;
-		runs=10;
 		isElementary=true;
 	}
 	
