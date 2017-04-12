@@ -7,7 +7,7 @@ public class PlasmonicMetamaterials extends Material {
 	}
 	
 	@Override
-	public String getName() {
+	public String getName() { 
 		return "Plasmonic Metamaterials";
 	}	
 

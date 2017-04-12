@@ -26,6 +26,7 @@ import ru.itx.EveAssets.production.product._800mm_Repeating_Cannon_I_;
 import ru.itx.EveAssets.production.product._Fernite_Carbide_Composite_Armor_Plate_;
 import ru.itx.EveAssets.production.product._Mega_Pulse_Laser_II_;
 import ru.itx.EveAssets.production.product._Mega_Pulse_Laser_I_;
+import ru.itx.EveAssets.production.product._Nanomechanical_Microprocessor_;
 import ru.itx.EveAssets.production.product._Neutron_Blaster_Cannon_II_;
 import ru.itx.EveAssets.production.product._Neutron_Blaster_Cannon_I_;
 import ru.itx.EveAssets.production.product._RAM_Weapon_Tech_;
@@ -46,6 +47,7 @@ import enterprises.orbital.evexmlapi.map.ISovereignty;
 import enterprises.orbital.evexmlapi.map.ISystemSovereignty;
 import enterprises.orbital.evexmlapi.shared.IAsset;
 import enterprises.orbital.evexmlapi.shared.ILocation;
+import enterprises.orbital.evexmlapi.shared.IMarketOrder;
 import enterprises.orbital.evexmlapi.svr.IServerAPI;
 import enterprises.orbital.evexmlapi.svr.IServerStatus;
 import enterprises.orbital.impl.evexmlapi.shared.ApiLocation;
@@ -89,6 +91,17 @@ public class App
 			Data.getInstance().scanAssets(assets,characterID);
 		}		
 	}
+
+	public void LoadOders() throws IOException{
+	    // All assets 
+		for(ICharacterAPI ic:Data.getInstance().charAPIHandles.values()){
+			long characterID=ic.requestCharacterSheet().getCharacterID();
+			System.out.println(ic.requestCharacterSheet().getName());
+			System.out.println("+++++++++++++++");
+			Collection<IMarketOrder> orders=(Collection<IMarketOrder>) ic.requestMarketOrders();
+			Data.getInstance().scanOrders(orders,characterID);
+		}		
+	}
 	
     public static void main( String[] args ) throws Exception
     {
@@ -100,8 +113,9 @@ public class App
 		System.out.println("=======================Must production=============================");
 		ArrayList<Item> items=new ArrayList<Item>();
 		ArrayList<Item> result=new ArrayList<Item>();
+//		items.add(new _Nanomechanical_Microprocessor_(2757));
 //		items.add(new _Slasher_(200));
-		items.add(new _Stiletto_(200));
+		items.add(new _Stiletto_(77));
 //		items.add(new _Scythe_(115));
 //		items.add(new _Scimitar_(10));
 //		items.add(new _Mega_Pulse_Laser_I_(200));
@@ -141,6 +155,7 @@ public class App
     					ICharacterSheet sheet = ic.requestCharacterSheet();
     					System.out.printf("%1$10s:  %2$s\n","Name",sheet.getName());
     					System.out.printf("%1$10s:  %2$s\n","Z",NumberFormat.getCurrencyInstance().format(sheet.getBalance()));
+    					System.out.printf("%1$10s:  %2$s\n","Name",Data.getInstance().getSolarSystem((int)sheet.getHomeStationID()));
     				}
     				System.out.println("====================");
     		    	app.loadStations();

@@ -33,6 +33,7 @@ import enterprises.orbital.evexmlapi.map.IMapAPI;
 import enterprises.orbital.evexmlapi.map.ISovereignty;
 import enterprises.orbital.evexmlapi.map.ISystemSovereignty;
 import enterprises.orbital.evexmlapi.shared.IAsset;
+import enterprises.orbital.evexmlapi.shared.IMarketOrder;
 import enterprises.orbital.evexmlapi.svr.IServerAPI;
 
 
@@ -209,6 +210,21 @@ public class Data {
 	    }
 	}
 
+	public void scanOrders(Collection<IMarketOrder> orders,long characterID) throws IOException{
+		int counter=0;
+		for(IMarketOrder o:orders){
+			if((counter++ % 100)==0)System.out.print(".");
+//			o.getVolEntered() 
+//			o.getTypeID()
+	    	if(getTypeName(o.getTypeID())==null){
+	    		Collection<ITypeName> tns= iEveAPI.requestTypeName(o.getTypeID());
+	    		putTypeName(tns);
+		    	}
+	    	putAsset(a,characterID);
+	    }
+	}
+
+	
 	public void putAsset(IAsset asset,long characterID) throws IOException{
 		if(asset.getLocationID()!=0)lastLocationID=asset.getLocationID();
 		if(!assets.containsKey(asset.getTypeID())) assets.put(asset.getTypeID(),new Wrapper());
@@ -220,6 +236,7 @@ public class Data {
 			System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!! cacheQuantityes collision !!!!!!!!!!!!!!!!!!!!!!!!");
 			System.exit(-1);
 		}
+		// Calculate cacheQuantityes
 		cacheQuantityes.put(asset.getItemID(), asset.getQuantity());
 		if(asset.getContainedAssets()!=null){
 			scanAssets(asset.getContainedAssets(),characterID);

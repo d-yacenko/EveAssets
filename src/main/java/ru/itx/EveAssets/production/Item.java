@@ -26,8 +26,8 @@ public abstract class Item {
 	public ArrayList<Item> make() {return null;}
 	public ArrayList<Item> makeFromRest() {return null;}
 
-	public ArrayList<Item> make(int run) {return null;}
-	public ArrayList<Item> makeFromRest(int run) {return null;}
+	public ArrayList<Item> make(double run) {return null;}
+	public ArrayList<Item> makeFromRest(double run) {return null;}
 
 	public static Item duplicate(Item item,int num){
 		Class classItem=item.getClass();

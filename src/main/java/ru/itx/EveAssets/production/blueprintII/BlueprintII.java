@@ -48,32 +48,32 @@ public abstract class BlueprintII extends Blueprint {
 	
 	
 	@Override
-	public ArrayList<Item> make(int run) {
+	public ArrayList<Item> make(double run) {
 		double r=100.*run/((blueprint.probability+blueprint.probability*decryptor.modProbability/100)*(blueprint.runs+decryptor.modRuns));
 		run=(int)Math.ceil(r);
 		ArrayList<Item> items=new ArrayList<Item>();
-		Item tmpItem=Item.duplicate(decryptor, volume*run*decryptor.volume);
+		Item tmpItem=Item.duplicate(decryptor, volume*(int)run*decryptor.volume);
 		if(tmpItem!=null)items.add(tmpItem);
-		tmpItem=Item.duplicate(datacore1, volume*run*datacore1.volume);
+		tmpItem=Item.duplicate(datacore1, volume*(int)run*datacore1.volume);
 		if(tmpItem!=null)items.add(tmpItem);
-		tmpItem=Item.duplicate(datacore2, volume*run*datacore2.volume);
+		tmpItem=Item.duplicate(datacore2, volume*(int)run*datacore2.volume);
 		if(tmpItem!=null)items.add(tmpItem);
-		tmpItem=Item.duplicate(blueprint, volume*run*blueprint.volume);
+		tmpItem=Item.duplicate(blueprint, volume*(int)run*blueprint.volume);
 		if(tmpItem!=null)items.add(tmpItem);
 		return items;
 	}
 	@Override
-	public ArrayList<Item> makeFromRest(int run) {
+	public ArrayList<Item> makeFromRest(double run) {
 		double r=100.*run/((blueprint.probability+blueprint.probability*decryptor.modProbability/100)*(blueprint.runs+decryptor.modRuns));
 		run=(int)Math.ceil(r);
 		ArrayList<Item> items=new ArrayList<Item>();
-		Item tmpItem=Item.duplicate(decryptor, minus(decryptor.getName(),volume*run*decryptor.volume));
+		Item tmpItem=Item.duplicate(decryptor, minus(decryptor.getName(),volume*(int)run*decryptor.volume));
 		if(tmpItem!=null)items.add(tmpItem);
-		tmpItem=Item.duplicate(datacore1, minus(datacore1.getName(), volume*run*datacore1.volume));
+		tmpItem=Item.duplicate(datacore1, minus(datacore1.getName(), volume*(int)run*datacore1.volume));
 		if(tmpItem!=null)items.add(tmpItem);
-		tmpItem=Item.duplicate(datacore2, minus(datacore2.getName(), volume*run*datacore2.volume));
+		tmpItem=Item.duplicate(datacore2, minus(datacore2.getName(), volume*(int)run*datacore2.volume));
 		if(tmpItem!=null)items.add(tmpItem);
-		tmpItem=Item.duplicate(blueprint, minus(blueprint.getName(), volume*run*blueprint.volume));
+		tmpItem=Item.duplicate(blueprint, minus(blueprint.getName(), volume*(int)run*blueprint.volume));
 		if(tmpItem!=null)items.add(tmpItem);
 		return items;
 	}
