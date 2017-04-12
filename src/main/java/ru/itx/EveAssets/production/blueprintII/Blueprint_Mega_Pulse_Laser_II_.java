@@ -17,6 +17,7 @@ public class Blueprint_Mega_Pulse_Laser_II_ extends BlueprintII {
 		decryptor=new ParityDecryptor(1);
 		blueprint=new Blueprint_Mega_Pulse_Laser_I_(1);
 		isElementary=false;
+		recalculateEfficiency();
 	}
 	@Override
 	public String getName() {

@@ -32,14 +32,18 @@ public abstract class Prototype extends Item {
 		}
 		for (Item item : materials)
 			if (item.isElementary) {
-				Item tmpItem=Item.duplicate(item, item.calcWithME(volume*run,me));
+				Item tmpItem;
+				if(item.volume!=1)	tmpItem=Item.duplicate(item, (int)Math.ceil(me*item.volume*volume*run));
+				else tmpItem=Item.duplicate(item, item.volume*volume*run);
 				items.add(tmpItem);
 			} else{
-				if(item.isMetaMaterials)items.addAll(item.make(calcWithME(volume*run, me)/item.volume));
+				if(item.isMetaMaterials)items.addAll(item.make((int)Math.ceil(me*volume*run)));
 				else items.addAll(item.make(run*volume));
 			}
 		return items;
 	}
+	
+	
 	@Override
 	public ArrayList<Item> makeFromRest(int run) {
 		ArrayList<Item> items = new ArrayList<Item>();

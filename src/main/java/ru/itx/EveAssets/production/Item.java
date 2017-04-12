@@ -62,10 +62,6 @@ public abstract class Item {
 		}
 	}
 	
-	public int calcWithME(int quantity,double ME){
-		return (int)Math.ceil(ME*volume)*quantity;
-	}
-	
 	protected int minus(String name,int needed){
 		return Data.getInstance().minusRest(name,needed);
 	}

@@ -14,6 +14,7 @@ public class Blueprint_Neutron_Blaster_Cannon_II_ extends BlueprintII {
 		decryptor=new ParityDecryptor(1);
 		blueprint=new Blueprint_Neutron_Blaster_Cannon_I_(1);
 		isElementary=false;
+		recalculateEfficiency();
 	}
 	@Override
 	public String getName() {

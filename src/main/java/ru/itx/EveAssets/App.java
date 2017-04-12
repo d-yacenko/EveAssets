@@ -100,8 +100,8 @@ public class App
 		System.out.println("=======================Must production=============================");
 		ArrayList<Item> items=new ArrayList<Item>();
 		ArrayList<Item> result=new ArrayList<Item>();
-//		items.add(new _Slasher_(115));
-		items.add(new _Stiletto_(115));
+//		items.add(new _Slasher_(200));
+		items.add(new _Stiletto_(200));
 //		items.add(new _Scythe_(115));
 //		items.add(new _Scimitar_(10));
 //		items.add(new _Mega_Pulse_Laser_I_(200));
