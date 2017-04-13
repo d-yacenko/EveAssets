@@ -1,6 +1,8 @@
 package ru.itx.EveAssets;
 
 import enterprises.orbital.evexmlapi.shared.IAsset;
+import enterprises.orbital.evexmlapi.shared.IIndustryJob;
+import enterprises.orbital.evexmlapi.shared.IMarketOrder;
 
 public class Asset implements Comparable<Asset>{
 	  private long                       itemID;
@@ -25,7 +27,17 @@ public class Asset implements Comparable<Asset>{
 	  public static Asset cloneIAsset(IAsset ia){
 		  return new Asset(ia.getItemID(), ia.getLocationID(), ia.getTypeID(), ia.getQuantity(), ia.getFlag(), ia.getRawQuantity());		
 	  }
-	@Override
+
+		public static Asset cloneIMarketOrder(IMarketOrder ord) {			
+			return new Asset(Data.getInstance().generateRandomizeItemID(), ord.getStationID(), ord.getTypeID(), ord.getVolRemaining(), 0, 0);
+		}
+
+		public static Asset cloneIMarketJob(IIndustryJob job) {
+			return null;
+//			return new Asset(Data.getInstance().generateRandomizeItemID(), job.getStationID(), job.getProductTypeID(), ord.getVolRemaining(), 0, 0);
+		}
+	  
+	  @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -100,4 +112,6 @@ public class Asset implements Comparable<Asset>{
 		// TODO Auto-generated method stub
 		return (int)(itemID-o.itemID);
 	}
+
+
 }

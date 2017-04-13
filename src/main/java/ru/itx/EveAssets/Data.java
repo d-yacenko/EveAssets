@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -33,6 +34,7 @@ import enterprises.orbital.evexmlapi.map.IMapAPI;
 import enterprises.orbital.evexmlapi.map.ISovereignty;
 import enterprises.orbital.evexmlapi.map.ISystemSovereignty;
 import enterprises.orbital.evexmlapi.shared.IAsset;
+import enterprises.orbital.evexmlapi.shared.IIndustryJob;
 import enterprises.orbital.evexmlapi.shared.IMarketOrder;
 import enterprises.orbital.evexmlapi.svr.IServerAPI;
 
@@ -198,7 +200,7 @@ public class Data {
 	public void scanAssets(Collection<IAsset> assets,long characterID) throws IOException{
 		int counter=0;
 		for(IAsset a:assets){
-			if((counter++ % 100)==0)System.out.print(".");
+			if((counter++ % 200)==0)System.out.print(".");
 	    	if(getTypeName(a.getTypeID())==null){
 	    		Collection<ITypeName> tns= iEveAPI.requestTypeName(a.getTypeID());
 	    		putTypeName(tns);
@@ -213,17 +215,26 @@ public class Data {
 	public void scanOrders(Collection<IMarketOrder> orders,long characterID) throws IOException{
 		int counter=0;
 		for(IMarketOrder o:orders){
-			if((counter++ % 100)==0)System.out.print(".");
-//			o.getVolEntered() 
-//			o.getTypeID()
+			if((counter++ % 10)==0)System.out.print(".");
 	    	if(getTypeName(o.getTypeID())==null){
 	    		Collection<ITypeName> tns= iEveAPI.requestTypeName(o.getTypeID());
 	    		putTypeName(tns);
 		    	}
-	    	putAsset(a,characterID);
+	    	putAssetFromOrder(o,characterID);
 	    }
 	}
 
+	public void scanJobs(Collection<IIndustryJob> jobs, long characterID) {
+		int counter=0;
+		for(IIndustryJob j:jobs){
+			if((counter++ % 10)==0)System.out.print(".");
+//	    	if(getTypeName((int)j.getProductTypeID())==null){
+//	    		Collection<ITypeName> tns= iEveAPI.requestTypeName((int)j.getProductTypeID());
+//	    		putTypeName(tns);
+//		    	}
+//	    	putAssetFromJob(j,characterID);
+	    }
+	}
 	
 	public void putAsset(IAsset asset,long characterID) throws IOException{
 		if(asset.getLocationID()!=0)lastLocationID=asset.getLocationID();
@@ -242,12 +253,42 @@ public class Data {
 			scanAssets(asset.getContainedAssets(),characterID);
 		}
 	}
+	
+	public void putAssetFromOrder(IMarketOrder order,long characterID) throws IOException{
+		if(order.getBid()!=1)return;
+		if(!assets.containsKey(order.getTypeID())) assets.put(order.getTypeID(),new Wrapper());
+		Asset currAsset=Asset.cloneIMarketOrder(order);
+		assets.get(order.getTypeID()).assets.add(currAsset);
+		assets.get(order.getTypeID()).characterIDs.add(characterID);		
+		// Calculate cacheQuantityes
+		cacheQuantityes.put(currAsset.getItemID(), currAsset.getQuantity());
+	}
+
+	public void putAssetFromJob(IIndustryJob job,long characterID) throws IOException{
+		if(!assets.containsKey(job.getProductTypeID())) assets.put((int)job.getProductTypeID(),new Wrapper());
+		Asset currAsset=Asset.cloneIMarketJob(job);
+//		job.getRuns();
+//		job.getBlueprintID()
+//		
+//		assets.get(order.getTypeID()).assets.add(currAsset);
+//		assets.get(order.getTypeID()).characterIDs.add(characterID);		
+		// Calculate cacheQuantityes
+		cacheQuantityes.put(currAsset.getItemID(), currAsset.getQuantity());
+	}
+	
 	public void recalculateCacheQuantity(){
 		cacheQuantityes.clear();
 		for(Wrapper w: assets.values())
 			for(Asset a:w.assets){
 				cacheQuantityes.put(a.getItemID(), a.getQuantity());
 			}
+	}
+	
+	public long generateRandomizeItemID(){
+		Random r=new Random();
+		long id=r.nextLong();
+		while(assets.containsKey(id)) id=r.nextLong();
+		return id;
 	}
 	
 	public int getAssetTypesNumbers(){
@@ -264,6 +305,7 @@ public class Data {
 		return result;
 	}
 	
+
 	public String location2SolarSystem(long locationID){
     	String sys="";
     	if(locationID<61000000){
@@ -296,5 +338,6 @@ public class Data {
 		}
 		return result;
 	}
+
 	
 }
