@@ -110,18 +110,12 @@ public class Data {
 		hubs.add("Rens");
 		hubs.add("Dodixie");
 		hubs.add("Bahromab");
-		credentials.add(new Credential(533682, "xyUSZTYDVhfjIIOnjOkoHDIP82aa6tuKXw7NBB2DTViVKnln1tv6q2qtcWN5m8bn",91520143 , "Dimetrus Ostus"));		
-		credentials.add(new Credential(6126963, "dHTUxKeIdqHtG16aVl0lNiCyfHepBiEkD7ddUp7pgUc0vRJV12AhJk9kBPIqvNUu", 93612826, "Ivan LiSiTcin"));		
-		credentials.add(new Credential(6126968, "Q8D82Gb3D1y4pUQKmJIqFfBryMDbeouefHBFVNLuIAjzj2hmDNLJewchdoQZaWDe", 2112633584, "Amazing Brilliant"));		
-		credentials.add(new Credential(6126975, "o0e6uP54adU8YkHRBlVH7LWT5CTqDTfMMPQy4pXhS0p3TLXhwjB18tdjzOARQJv6", 92621534, "Red Mr"));		
-		credentials.add(new Credential(6126976, "oBMXdWwDiNElYzwn7VCQWykmHKQhwtwt1ERN7Mz2HJzllZNXfdRAXdUE13cyoRF4", 96723857, "test'char please'ignor"));		
-		credentials.add(new Credential(6126978, "hTpXcHj11so00imOeDel62F3hTAaDmXEGPngkrXEAVxBvRImfmaEjbuEkaQvOLve", 2112633866, "Greet Enderas"));		
 		try {
 			apiHandle = new EveXmlApiAdapter();
 	    	iEveAPI=apiHandle.getEveAPIService();
 	    	serverAPIHandle = apiHandle.getServerAPIService();
 	    	iMapAPI= apiHandle.getMapAPIService();
-	    	for(Credential c:credentials) charAPIHandles.put(c.getKeyID(),apiHandle.getCharacterAPIService(c.getKeyID(), c.getvCode(), c.getCharacterID()));
+	    	for(Credential c:App._credentials) charAPIHandles.put(c.getKeyID(),apiHandle.getCharacterAPIService(c.getKeyID(), c.getvCode(), c.getCharacterID()));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

@@ -1,15 +1,20 @@
 package ru.itx.EveAssets;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.security.KeyStore.LoadStoreParameter;
 import java.text.NumberFormat;
@@ -64,8 +69,14 @@ import enterprises.orbital.impl.evexmlapi.shared.ApiLocation;
  */
 public class App 
 {
+	ArrayList<Item> items,result;
+	public static ArrayList<Credential> _credentials;
 	
-	
+	public App() {
+		items=new ArrayList<Item>();
+		result=new ArrayList<Item>();
+		_credentials=new ArrayList<>();
+	}
 	
 	public void loadSolarSystem() throws IOException{
 	    //==============================================
@@ -133,35 +144,48 @@ public class App
 		// Stop capturing
 		System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
 	}
-	
+	public void inputFromStdin() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException{
+		System.out.println("Input caclulated assets here in following format");
+		System.out.println("<number assets as integer number>,<desired asset name>");
+		System.out.println("end");
+		System.out.println("for ex: ");
+		System.out.println("77, Stiletto");
+		System.out.println("200, 800mm Repeating Cannon II");
+		System.out.println("546782,xydfgDFgVhfjdfgnjOkoHsdfgDaa6tuKXw7NBDFGTViVKnln1tv6q2qtcWN5m8bn,91546643,Direktus Cactus");
+		System.out.println("543682,df4tdfggVhfjdfxfgsdofgffgdfghtdfhw7fghFdfgh546lrghf6dr6t75ghm453,34645257,Dfg Cactus");
+		System.out.println("246745,dfsg4tsdgtwt43rgq4tygesrfgaw4tw456yuwrhbw5ytw45gw45twgwdegfw4442,65345435,Ort Cactus");
+		System.out.println("end");
+		Scanner sc=new Scanner(System.in);
+		while(sc.hasNextLine()){
+			String str=sc.nextLine();
+			String[] tokens = str.split(",");
+			if(tokens.length==0)continue;
+			if(tokens.length==1)break;
+			if(tokens.length==2){
+				int num=Integer.valueOf(tokens[0]).intValue();
+				String name="_"+tokens[1].trim().replace(' ', '_')+"_";
+				Class itemClass=Class.forName("ru.itx.EveAssets.production.product."+name);
+				Item item=(Item)(itemClass.getDeclaredConstructor(int.class).newInstance(num));
+				items.add(item);
+			}
+			if(tokens.length==4){
+				//vKeyID,vCode,charID,CharName
+				_credentials.add(new Credential(Integer.valueOf(tokens[0]).intValue(), tokens[1],Integer.valueOf(tokens[2]).intValue(), tokens[3]));		
+			}
+		}
+		
+	}
     public static void main( String[] args ) throws Exception
     {
-    	Scanner sc=new Scanner(System.in);
     	interceptErrOn();
+    	App app=new App();
 		//==================================
 		// calculate !!!!
 		//==================================
 		System.out.println("===================================================================");
 		System.out.println("=======================Must production=============================");
-		ArrayList<Item> items=new ArrayList<Item>();
-		ArrayList<Item> result=new ArrayList<Item>();
-		System.out.println("Input caclulated assets here in following format");
-		System.out.println("<number assets as integer number> <asset name- \" \" symbol replace as \"_\"> ctrl+d");
-		System.out.println("for ex: 77 Stiletto 200 800mm_Repeating_Cannon_II ctrl+d");
-		while(sc.hasNextLine()){
-			String name="";
-			try{
-			int num=sc.nextInt();
-			name=sc.next();
-			Class citem=Class.forName("ru.itx.EveAssets.production.product._"+name.trim()+"_");
-			Constructor constructor=citem.getDeclaredConstructor(int.class);
-			Item item=(Item)constructor.newInstance(num);
-			items.add(item);
-			}catch(Exception e){
-				System.out.println("Error load class "+name);
-				System.out.println(e);
-			}
-		}
+		app.inputFromStdin();
+		
 //		items.add(new _Nanomechanical_Microprocessor_(2757));
 //		items.add(new _Slasher_(200));
 //		items.add(new _Stiletto_(77));
@@ -174,16 +198,17 @@ public class App
 //		items.add(new _800mm_Repeating_Cannon_I_(115));
 //		items.add(new _Neutron_Blaster_Cannon_I_(200));
 //		items.add(new _Neutron_Blaster_Cannon_II_(200));
-		Item.print(items);
+		Item.print(app.items);
 		System.out.println("===================================================================");
 		System.out.println("==========================Receips==============================");
-		for(Item item:items){
-			result.addAll(item.make());
+		for(Item item:app.items){
+			app.result.addAll(item.make());
 		}
-		result=Item.comress(result);
-		Item.print(result);
+		app.result=Item.comress(app.result);
+		Item.print(app.result);
 		System.out.println("===================================================================");
 		System.out.print("  Continue (y/n)?");
+		Scanner sc=new Scanner(System.in);
 		if(!sc.next().equals("y")) System.exit(0);
 		System.out.println("===================================================================");
 		System.out.println("=============================Money=================================");
@@ -193,7 +218,6 @@ public class App
 
 		System.out.print("  Load from File or Eve (f/e)?");
 		String answer=sc.next();
-    	App app=new App();
     	if(answer.equals("e")){
     		IServerStatus status = Data.getInstance().serverAPIHandle.requestServerStatus();
     		if (!Data.getInstance().serverAPIHandle.isError()) {
@@ -230,12 +254,12 @@ public class App
     	}
 		System.out.println("\n===================================================================");
 		System.out.println("=========================Need to bye===============================");
-		result=new ArrayList<Item>();
-		for(Item item:items){
-			result.addAll(item.makeFromRest());
+		app.result=new ArrayList<Item>();
+		for(Item item:app.items){
+			app.result.addAll(item.makeFromRest());
 		}
-		result=Item.comress(result);
-		Item.print(result);
+		app.result=Item.comress(app.result);
+		Item.print(app.result);
     	interceptErrOff();
     }
 }
