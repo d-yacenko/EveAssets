@@ -103,7 +103,7 @@ public class App
 		System.out.println("load ASSETS");
 		for(ICharacterAPI ic:Data.getInstance().charAPIHandles.values()){
 			long characterID=ic.requestCharacterSheet().getCharacterID();
-			System.out.println("+++"+ic.requestCharacterSheet().getName()+"+++");
+			System.out.print("\n+++"+ic.requestCharacterSheet().getName()+"+++");
 			Set<IAsset> assets=(Set<IAsset>) ic.requestAssets();
 			Data.getInstance().scanAssets(assets,characterID);
 		}		
@@ -115,7 +115,7 @@ public class App
 		System.out.println("load ORDERS");
 		for(ICharacterAPI ic:Data.getInstance().charAPIHandles.values()){
 			long characterID=ic.requestCharacterSheet().getCharacterID();
-			System.out.println("+++"+ic.requestCharacterSheet().getName()+"+++");
+			System.out.print("\n+++"+ic.requestCharacterSheet().getName()+"+++");
 			Collection<IMarketOrder> orders=(Collection<IMarketOrder>) ic.requestMarketOrders();
 			Data.getInstance().scanOrders(orders,characterID);
 		}	
@@ -127,7 +127,7 @@ public class App
 		System.out.println("load JOBS");
 		for(ICharacterAPI ic:Data.getInstance().charAPIHandles.values()){
 			long characterID=ic.requestCharacterSheet().getCharacterID();
-			System.out.println("+++"+ic.requestCharacterSheet().getName()+"+++");
+			System.out.print("\n+++"+ic.requestCharacterSheet().getName()+"+++");
 			Collection<IIndustryJob> jobs=(Collection<IIndustryJob>) ic.requestIndustryJobs();
 			Data.getInstance().scanJobs(jobs,characterID);
 		}		
@@ -158,13 +158,19 @@ public class App
 		while(sc.hasNextLine()){
 			String str=sc.nextLine();
 			String[] tokens = str.split(",");
+			Item item=null;
 			if(tokens.length==0)continue;
 			if(tokens.length==1)break;
 			if(tokens.length==2){
 				int num=Integer.valueOf(tokens[0]).intValue();
 				String name="_"+tokens[1].trim().replace(' ', '_')+"_";
+				try{
 				Class itemClass=Class.forName("ru.itx.EveAssets.production.product."+name);
-				Item item=(Item)(itemClass.getDeclaredConstructor(int.class).newInstance(num));
+				item=(Item)(itemClass.getDeclaredConstructor(int.class).newInstance(num));
+				} catch(Exception e){
+					System.out.println("Asset type is error: "+tokens[1]);
+					System.exit(0);
+				}
 				items.add(item);
 			}
 			if(tokens.length==4){
