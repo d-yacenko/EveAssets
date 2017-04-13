@@ -129,8 +129,7 @@ public class App
 			long characterID=ic.requestCharacterSheet().getCharacterID();
 			System.out.println("+++"+ic.requestCharacterSheet().getName()+"+++");
 			Collection<IIndustryJob> jobs=(Collection<IIndustryJob>) ic.requestIndustryJobs();
-//			ic.re
-//			Data.getInstance().scanJobs(jobs,characterID);
+			Data.getInstance().scanJobs(jobs,characterID);
 		}		
 		System.out.println();
 	}
@@ -175,6 +174,8 @@ public class App
 		}
 		
 	}
+	
+	
     public static void main( String[] args ) throws Exception
     {
     	interceptErrOn();
@@ -185,19 +186,7 @@ public class App
 		System.out.println("===================================================================");
 		System.out.println("=======================Must production=============================");
 		app.inputFromStdin();
-		
-//		items.add(new _Nanomechanical_Microprocessor_(2757));
-//		items.add(new _Slasher_(200));
-//		items.add(new _Stiletto_(77));
-//		items.add(new _Scythe_(115));
-//		items.add(new _Scimitar_(10));
-//		items.add(new _Mega_Pulse_Laser_I_(200));
-//		items.add(new _Mega_Pulse_Laser_II_(200));
-//		items.add(new _800mm_Repeating_Cannon_II_(115));
-//		items.add(new _RAM_Weapon_Tech_(115));
-//		items.add(new _800mm_Repeating_Cannon_I_(115));
-//		items.add(new _Neutron_Blaster_Cannon_I_(200));
-//		items.add(new _Neutron_Blaster_Cannon_II_(200));
+
 		Item.print(app.items);
 		System.out.println("===================================================================");
 		System.out.println("==========================Receips==============================");

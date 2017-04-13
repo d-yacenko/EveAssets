@@ -34,6 +34,7 @@ import enterprises.orbital.evexmlapi.map.IMapAPI;
 import enterprises.orbital.evexmlapi.map.ISovereignty;
 import enterprises.orbital.evexmlapi.map.ISystemSovereignty;
 import enterprises.orbital.evexmlapi.shared.IAsset;
+import enterprises.orbital.evexmlapi.shared.IBlueprint;
 import enterprises.orbital.evexmlapi.shared.IIndustryJob;
 import enterprises.orbital.evexmlapi.shared.IMarketOrder;
 import enterprises.orbital.evexmlapi.svr.IServerAPI;
@@ -115,7 +116,10 @@ public class Data {
 	    	iEveAPI=apiHandle.getEveAPIService();
 	    	serverAPIHandle = apiHandle.getServerAPIService();
 	    	iMapAPI= apiHandle.getMapAPIService();
-	    	for(Credential c:App._credentials) charAPIHandles.put(c.getKeyID(),apiHandle.getCharacterAPIService(c.getKeyID(), c.getvCode(), c.getCharacterID()));
+	    	for(Credential c:App._credentials) {
+	    		charAPIHandles.put(c.getKeyID(),apiHandle.getCharacterAPIService(c.getKeyID(), c.getvCode(), c.getCharacterID()));
+	    		credentials.add(c);
+	    	}
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
@@ -218,19 +222,19 @@ public class Data {
 	    }
 	}
 
-	public void scanJobs(Collection<IIndustryJob> jobs, long characterID) {
+	public void scanJobs(Collection<IIndustryJob> jobs, long characterID) throws IOException {
 		int counter=0;
 		for(IIndustryJob j:jobs){
 			if((counter++ % 10)==0)System.out.print(".");
-//	    	if(getTypeName((int)j.getProductTypeID())==null){
-//	    		Collection<ITypeName> tns= iEveAPI.requestTypeName((int)j.getProductTypeID());
-//	    		putTypeName(tns);
-//		    	}
-//	    	putAssetFromJob(j,characterID);
+	    	Asset a=putAssetFromJob(j,characterID);
+	    	if(a!=null && getTypeName((int)a.getTypeID())==null){
+	    		Collection<ITypeName> tns= iEveAPI.requestTypeName(a.getTypeID());
+	    		putTypeName(tns);
+		    	}
 	    }
 	}
 	
-	public void putAsset(IAsset asset,long characterID) throws IOException{
+	public Asset putAsset(IAsset asset,long characterID) throws IOException{
 		if(asset.getLocationID()!=0)lastLocationID=asset.getLocationID();
 		if(!assets.containsKey(asset.getTypeID())) assets.put(asset.getTypeID(),new Wrapper());
 		Asset currAsset=Asset.cloneIAsset(asset);
@@ -246,29 +250,48 @@ public class Data {
 		if(asset.getContainedAssets()!=null){
 			scanAssets(asset.getContainedAssets(),characterID);
 		}
+		return currAsset;
 	}
 	
-	public void putAssetFromOrder(IMarketOrder order,long characterID) throws IOException{
-		if(order.getBid()!=1)return;
+	public Asset putAssetFromOrder(IMarketOrder order,long characterID) throws IOException{
+		if(order.getBid()!=1)return null;
 		if(!assets.containsKey(order.getTypeID())) assets.put(order.getTypeID(),new Wrapper());
 		Asset currAsset=Asset.cloneIMarketOrder(order);
 		assets.get(order.getTypeID()).assets.add(currAsset);
 		assets.get(order.getTypeID()).characterIDs.add(characterID);		
 		// Calculate cacheQuantityes
 		cacheQuantityes.put(currAsset.getItemID(), currAsset.getQuantity());
+		return currAsset;
 	}
 
-	public void putAssetFromJob(IIndustryJob job,long characterID) throws IOException{
+	public Asset putAssetFromJob(IIndustryJob job,long characterID) throws IOException{
+		if(job.getProductTypeID()<1) return null;
 		if(!assets.containsKey(job.getProductTypeID())) assets.put((int)job.getProductTypeID(),new Wrapper());
-		Asset currAsset=Asset.cloneIMarketJob(job);
-//		job.getRuns();
-//		job.getBlueprintID()
-//		
-//		assets.get(order.getTypeID()).assets.add(currAsset);
-//		assets.get(order.getTypeID()).characterIDs.add(characterID);		
+		Asset currAsset=Asset.cloneIProductionJob(job);
+		assets.get((int)job.getProductTypeID()).assets.add(currAsset);
+		assets.get((int)job.getProductTypeID()).characterIDs.add(characterID);		
 		// Calculate cacheQuantityes
 		cacheQuantityes.put(currAsset.getItemID(), currAsset.getQuantity());
+		return currAsset;
 	}
+//	public Asset putAssetFromJob(IIndustryJob job,long characterID) throws IOException{
+//		IBlueprint bp=null;
+//		long keyID=0;
+//		ICharacterAPI characterAPI=null;
+//		if(job.getProductTypeID()<1) return null;
+//		for(ICharacterAPI ic:charAPIHandles.values())
+//			if(ic.requestCharacterSheet().getCharacterID()==characterID)
+//				{characterAPI=ic;break;}
+//		for(IBlueprint b:characterAPI.requestBlueprints())
+//			if(b.getItemID()==job.getBlueprintID())bp=b;
+//		if(!assets.containsKey(bp.getTypeID())) assets.put((int)bp.getTypeID(),new Wrapper());
+//		Asset currAsset=Asset.cloneIProductionJob(job,bp);
+//		assets.get(bp.getTypeID()).assets.add(currAsset);
+//		assets.get(bp.getTypeID()).characterIDs.add(characterID);		
+//		// Calculate cacheQuantityes
+//		cacheQuantityes.put(currAsset.getItemID(), currAsset.getQuantity());
+//		return currAsset;
+//	}
 	
 	public void recalculateCacheQuantity(){
 		cacheQuantityes.clear();

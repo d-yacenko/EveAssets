@@ -1,6 +1,7 @@
 package ru.itx.EveAssets;
 
 import enterprises.orbital.evexmlapi.shared.IAsset;
+import enterprises.orbital.evexmlapi.shared.IBlueprint;
 import enterprises.orbital.evexmlapi.shared.IIndustryJob;
 import enterprises.orbital.evexmlapi.shared.IMarketOrder;
 
@@ -32,10 +33,13 @@ public class Asset implements Comparable<Asset>{
 			return new Asset(Data.getInstance().generateRandomizeItemID(), ord.getStationID(), ord.getTypeID(), ord.getVolRemaining(), 0, 0);
 		}
 
-		public static Asset cloneIMarketJob(IIndustryJob job) {
-			return null;
-//			return new Asset(Data.getInstance().generateRandomizeItemID(), job.getStationID(), job.getProductTypeID(), ord.getVolRemaining(), 0, 0);
+		public static Asset cloneIProductionJob(IIndustryJob job) {
+			return new Asset(Data.getInstance().generateRandomizeItemID(), job.getStationID(), (int)job.getProductTypeID(), job.getRuns(), 0, 0);
 		}
+//		public static Asset cloneIProductionJob(IIndustryJob job,IBlueprint bp) {
+//			if(bp.getRuns()>0) System.out.println("!!!!! blueprint runs   "+bp.getRuns());
+//			return new Asset(Data.getInstance().generateRandomizeItemID(), job.getStationID(), (int)job.getProductTypeID(), job.getRuns(), 0, 0);
+//		}
 	  
 	  @Override
 	public int hashCode() {
