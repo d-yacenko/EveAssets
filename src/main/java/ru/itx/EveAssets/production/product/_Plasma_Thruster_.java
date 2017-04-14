@@ -3,7 +3,7 @@ package ru.itx.EveAssets.production.product;
 import java.util.ArrayList;
 
 import ru.itx.EveAssets.production.Item;
-import ru.itx.EveAssets.production.blueprint.Blueprint_Particle_Acellerator_Unit_;
+import ru.itx.EveAssets.production.blueprint.Blueprint_Particle_Accelerator_Unit_;
 import ru.itx.EveAssets.production.blueprint.Blueprint_Plasma_Thruster_;
 import ru.itx.EveAssets.production.material.CrystallineCarbonide;
 import ru.itx.EveAssets.production.material.FerniteCarbide;
