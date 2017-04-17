@@ -14,7 +14,7 @@ public abstract class BlueprintII extends Blueprint {
 	public static int DEFAULT_ME=2;
 	public static int DEFAULT_TE=4;
 	public static int DEFAULT_RUNS=1;
-	public static int DEFAULT_PROBABILTY=38;
+	public static int DEFAULT_PROBABILTY=0;
 	
 
 	
@@ -36,12 +36,10 @@ public abstract class BlueprintII extends Blueprint {
 		me=DEFAULT_ME;
 		te=DEFAULT_TE;
 		runs=DEFAULT_RUNS;
-		probability=DEFAULT_PROBABILTY;
 	}
 	
 	public void recalculateEfficiency(){
 		runs+=decryptor.modRuns;
-		probability=(int)(1.*probability+ probability*decryptor.modProbability/100.);
 		me+=decryptor.modME;
 		te+=decryptor.modTE;
 	}
@@ -49,8 +47,11 @@ public abstract class BlueprintII extends Blueprint {
 	
 	@Override
 	public ArrayList<Item> make(double run) {
-		double r=100.*run/((blueprint.probability+blueprint.probability*decryptor.modProbability/100)*(blueprint.runs+decryptor.modRuns));
-		run=(int)Math.ceil(r);
+
+//		double r=100.*run/((1.*blueprint.probability+blueprint.probability*decryptor.modProbability/100.)*(blueprint.runs+decryptor.modRuns));
+		double probab=1.*blueprint.probability+blueprint.probability*decryptor.modProbability/100.;
+		double r= probab*(1+decryptor.modRuns)/100;
+		run=(int)Math.ceil(1.0*run/r);
 		ArrayList<Item> items=new ArrayList<Item>();
 		Item tmpItem=Item.duplicate(decryptor, volume*(int)run*decryptor.volume);
 		if(tmpItem!=null)items.add(tmpItem);
