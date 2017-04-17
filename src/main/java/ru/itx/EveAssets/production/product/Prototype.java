@@ -25,10 +25,10 @@ public abstract class Prototype extends Item {
 		ArrayList<Item> items = new ArrayList<Item>();
 		double me=1.-blueprint.me/100.;
 		if (blueprint.isElementary) {
-			Item tmpItem=Item.duplicate(blueprint, (int)Math.ceil(me*volume*run/blueprint.runs));
+			Item tmpItem=Item.duplicate(blueprint, (int)Math.ceil(volume*run/blueprint.runs));
 			items.add(tmpItem);
 		} else{
-			items.addAll(blueprint.make((int)Math.ceil(me*run*volume)));
+			items.addAll(blueprint.make((int)Math.ceil(run*volume)));
 		}
 		for (Item item : materials)
 			if (item.isElementary) {
@@ -52,10 +52,10 @@ public abstract class Prototype extends Item {
 		ArrayList<Item> items = new ArrayList<Item>();
 		double me=1.-blueprint.me/100.;
 		if (blueprint.isElementary) {
-			Item tmpItem=Item.duplicate(blueprint, minus(blueprint.getName(), (int)Math.ceil(me*volume*run/(1.0*blueprint.runs))));
+			Item tmpItem=Item.duplicate(blueprint, minus(blueprint.getName(), (int)Math.ceil(volume*run/(1.0*blueprint.runs))));
 			items.add(tmpItem);
 		} else{
-			items.addAll(blueprint.makeFromRest(minus(blueprint.getName(),(int)Math.ceil(me*run*volume))));
+			items.addAll(blueprint.makeFromRest(minus(blueprint.getName(),(int)Math.ceil(run*volume))));
 		}
 		for (Item item : materials)
 			if (item.isElementary) {
