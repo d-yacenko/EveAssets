@@ -65,8 +65,9 @@ public abstract class BlueprintII extends Blueprint {
 	}
 	@Override
 	public ArrayList<Item> makeFromRest(double run) {
-		double r=100.*run/((blueprint.probability+blueprint.probability*decryptor.modProbability/100)*(blueprint.runs+decryptor.modRuns));
-		run=(int)Math.ceil(r);
+		double probab=1.*blueprint.probability+blueprint.probability*decryptor.modProbability/100.;
+		double r= probab*(1+decryptor.modRuns)/100;
+		run=(int)Math.ceil(1.0*run/r);
 		ArrayList<Item> items=new ArrayList<Item>();
 		Item tmpItem=Item.duplicate(decryptor, minus(decryptor.getName(),volume*(int)run*decryptor.volume));
 		if(tmpItem!=null)items.add(tmpItem);

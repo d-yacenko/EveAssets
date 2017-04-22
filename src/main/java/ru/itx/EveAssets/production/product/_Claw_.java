@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 import ru.itx.EveAssets.production.Item;
 import ru.itx.EveAssets.production.blueprintII.Blueprint_800mm_Repeating_Cannon_II_;
+import ru.itx.EveAssets.production.blueprintII.Blueprint_Claw_;
 import ru.itx.EveAssets.production.blueprintII.Blueprint_Stiletto_;
 import ru.itx.EveAssets.production.material.ConstructionBlocks;
 import ru.itx.EveAssets.production.material.Morphite;
 import ru.itx.EveAssets.production.material.Robotics;
 
-public class _Stiletto_ extends Prototype {
+public class _Claw_ extends Prototype {
 
 	// максимальный расход (ME=0)
-	public _Stiletto_(int volume) {
+	public _Claw_(int volume) {
 		this.volume=volume;
 		materials=new ArrayList<Item>();
 		materials.add(new _Slasher_(1));
@@ -26,11 +27,11 @@ public class _Stiletto_ extends Prototype {
 		materials.add(new _Electrolytic_Capacitor_Unit_(75));
 		materials.add(new Morphite(8));
 		materials.add(new ConstructionBlocks(15));
-		blueprint=new Blueprint_Stiletto_(1);
+		blueprint=new Blueprint_Claw_(1);
 		isElementary=false;
 	}
 	@Override
 	public String getName() {
-		return "Stiletto";
+		return "Claw";
 	}
 }
