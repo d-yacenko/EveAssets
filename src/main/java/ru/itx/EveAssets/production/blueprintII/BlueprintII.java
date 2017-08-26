@@ -11,8 +11,8 @@ import ru.itx.EveAssets.production.decryptor.Decryptor;
 public abstract class BlueprintII extends Blueprint {
 
 	
-	public static int DEFAULT_ME=2;
-	public static int DEFAULT_TE=4;
+	public static int DEFAULT_ME=10;
+	public static int DEFAULT_TE=20;
 	public static int DEFAULT_RUNS=1;
 	public static int DEFAULT_PROBABILTY=0;
 	

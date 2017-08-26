@@ -18,15 +18,15 @@ public class _Scimitar_ extends Prototype {
 		materials=new ArrayList<Item>();
 		materials.add(new _Scythe_(1));
 		materials.add(new _RAM_Starship_Tech_(12));
-		materials.add(new _Plasma_Thruster_(73));
-		materials.add(new _Fernite_Carbide_Composite_Armor_Plate_(2183));
-		materials.add(new _Ladar_Sensor_Cluster_(256));
-		materials.add(new _Nanomechanical_Microprocessor_(1746));
-		materials.add(new _Deflection_Shield_Emitter_(146));
+		materials.add(new _Plasma_Thruster_(75));
+		materials.add(new _Fernite_Carbide_Composite_Armor_Plate_(2250));
+		materials.add(new _Ladar_Sensor_Cluster_(263));
+		materials.add(new _Nanomechanical_Microprocessor_(1800));
+		materials.add(new _Deflection_Shield_Emitter_(150));
 		materials.add(new _Nuclear_Reactor_Unit_(23));
-		materials.add(new _Electrolytic_Capacitor_Unit_(728));
-		materials.add(new Morphite(88));
-		materials.add(new ConstructionBlocks(73));
+		materials.add(new _Electrolytic_Capacitor_Unit_(750));
+		materials.add(new Morphite(90));
+		materials.add(new ConstructionBlocks(75));
 		blueprint=new Blueprint_Scimitar_(1);
 		isElementary=false;
 	}

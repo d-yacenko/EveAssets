@@ -2,6 +2,7 @@
 200,1400mm Howitzer Artillery II
 200,Neutron Blaster Cannon II
 200,Mega Pulse Laser II
+200,Torpedo Launcher II
 60,Stiletto
 1,Claw
 1,Rapier
